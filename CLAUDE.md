@@ -133,6 +133,34 @@ build/
 └── package.json         # Package metadata
 ```
 
+## Browser Compatibility
+
+### Tizen 4 Support
+
+This template is configured to run on **Tizen 4 devices** (Samsung Smart Signage) which use an older Chromium version (~56, circa 2017).
+
+**Build Configuration:**
+- `vite.config.ts`: `target: 'es2015'` - Transpiles to ES2015/ES6
+- `tsconfig.app.json`: `target: "ES2015"` - TypeScript compilation target
+- Vite automatically polyfills necessary features (async/await, Promises, etc.)
+
+**Supported Features:**
+- ✅ Arrow functions
+- ✅ Classes
+- ✅ Template literals
+- ✅ let/const
+- ✅ Promises
+- ✅ async/await (polyfilled)
+- ✅ Map/Set (polyfilled)
+
+**NOT Supported (avoided in code):**
+- ❌ Optional chaining (`?.`) - Use manual checks
+- ❌ Nullish coalescing (`??`) - Use `||` instead
+- ❌ BigInt
+- ❌ Top-level await
+
+**Important:** When adding new dependencies, ensure they support ES2015 or provide ES5 bundles.
+
 ## Vite Configuration
 
 ### Node.js Polyfills

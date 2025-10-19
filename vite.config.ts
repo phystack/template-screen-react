@@ -24,6 +24,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    target: 'es2015', // Target ES2015 for Tizen 4 compatibility (Chrome 56-63 equivalent)
     sourcemap: false,
     rollupOptions: {
       output: {

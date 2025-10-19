@@ -199,9 +199,31 @@ build/
 └── package.json          # Package metadata
 ```
 
+## Browser Compatibility
+
+### Target Platforms
+
+✅ **Tizen 4** - Samsung Smart Signage (Chrome 56-63 equivalent)
+✅ **Modern Browsers** - Chrome, Firefox, Safari, Edge
+
+The build is configured for ES2015 (ES6) to support Tizen 4 devices while maintaining modern development experience.
+
+### Build Target
+
+- **Development**: Modern ES modules with HMR
+- **Production**: ES2015 (transpiled for Tizen 4 compatibility)
+
+```typescript
+// vite.config.ts
+build: {
+  target: 'es2015', // Tizen 4 compatible
+}
+```
+
 ## Compatibility
 
 ✅ Compatible with:
+- Tizen 4 devices (Samsung Smart Signage)
 - omg-deploys Azure Functions
 - @phystack/cli deployment tools
 - screen-boot deployment system
