@@ -87,6 +87,7 @@ function generateAssetManifest() {
   const manifest = {
     files,
     entrypoints,
+    phygrid_noframe: true, // Run directly without iframe wrapper
   };
 
   // Write asset-manifest.json
@@ -98,6 +99,7 @@ function generateAssetManifest() {
   console.log('✅ Generated asset-manifest.json');
   console.log('   Files:', Object.keys(files).length);
   console.log('   Entrypoints:', entrypoints.length);
+  console.log('   phygrid_noframe: true');
 }
 
 // Copy package.json to build directory
