@@ -9,6 +9,7 @@ This is a modern Vite-based React TypeScript template for building Phystack Grid
 ## Commands
 
 ### Development
+
 ```bash
 yarn install    # Install dependencies (only yarn allowed, enforced via preinstall)
 yarn dev        # Start dev server on http://localhost:3000 with auto-settings init
@@ -17,12 +18,14 @@ yarn lint       # Run ESLint
 ```
 
 ### Building
+
 ```bash
 yarn build      # Full production build: schema → TypeScript → Vite → post-processing
 yarn schema     # Generate settings and analytics schemas only
 ```
 
 ### Settings Management
+
 ```bash
 yarn download-settings <installation-name>  # Download settings from Phystack installation
 # Settings are downloaded to src/settings/index.json (gitignored, persistent)
@@ -30,6 +33,7 @@ yarn download-settings <installation-name>  # Download settings from Phystack in
 ```
 
 ### Deployment
+
 ```bash
 yarn pub                    # Publish to Phystack Grid (via @phystack/cli)
 yarn upload-description     # Upload DESCRIPTION.md to marketplace
@@ -140,11 +144,13 @@ build/
 This template is configured to run on **Tizen 4 devices** (Samsung Smart Signage) which use an older Chromium version (~56, circa 2017).
 
 **Build Configuration:**
+
 - `vite.config.ts`: `target: 'es2015'` - Transpiles to ES2015/ES6
 - `tsconfig.app.json`: `target: "ES2015"` - TypeScript compilation target
 - Vite automatically polyfills necessary features (async/await, Promises, etc.)
 
 **Supported Features:**
+
 - ✅ Arrow functions
 - ✅ Classes
 - ✅ Template literals
@@ -154,6 +160,7 @@ This template is configured to run on **Tizen 4 devices** (Samsung Smart Signage
 - ✅ Map/Set (polyfilled)
 
 **NOT Supported (avoided in code):**
+
 - ❌ Optional chaining (`?.`) - Use manual checks
 - ❌ Nullish coalescing (`??`) - Use `||` instead
 - ❌ BigInt
@@ -186,7 +193,7 @@ resolve: {
 Supports `PUBLIC_URL` environment variable for backward compatibility:
 
 ```typescript
-const base = process.env.PUBLIC_URL || process.env.VITE_ROOT_PATH || './';
+const base = process.env.PUBLIC_URL || process.env.VITE_ROOT_PATH || "./";
 ```
 
 ### Output Paths
@@ -231,12 +238,13 @@ This template follows **modern React 18 patterns**:
 
 ```typescript
 useEffect(() => {
-  let cancelled = false;  // Cleanup flag
+  let cancelled = false; // Cleanup flag
 
   const initialize = async () => {
     try {
       const data = await fetchData();
-      if (!cancelled) {  // Check before setState
+      if (!cancelled) {
+        // Check before setState
         setState(data);
       }
     } catch (err) {
@@ -249,7 +257,7 @@ useEffect(() => {
   initialize();
 
   return () => {
-    cancelled = true;  // Cleanup on unmount
+    cancelled = true; // Cleanup on unmount
   };
 }, []); // Empty array - runs once
 ```
@@ -270,7 +278,7 @@ export type Settings = {
    * @default "My Product"
    */
   productName: string;
-}
+};
 ```
 
 The `@default` values are extracted to generate `src/settings/.generated.json`.
@@ -280,15 +288,13 @@ The `@default` values are extracted to generate `src/settings/.generated.json`.
 Uses `@ombori/grid-reports` for dashboard configuration:
 
 ```typescript
-import { AnalyticsSchema, CardType } from '@ombori/grid-reports';
+import { AnalyticsSchema, CardType } from "@ombori/grid-reports";
 
 const analyticsSchema: AnalyticsSchema = {
   groups: [
     {
-      name: 'Overview',
-      cards: [
-        { type: CardType.Sessions },
-      ],
+      name: "Overview",
+      cards: [{ type: CardType.Sessions }],
     },
   ],
 };
@@ -323,6 +329,7 @@ phy dev ws                        # Connect to dev WebSocket
 ### Adding a New Setting
 
 1. Edit `src/schema.ts`:
+
 ```typescript
 export type Settings = {
   // ... existing settings
@@ -332,12 +339,13 @@ export type Settings = {
    * @default "default value"
    */
   newSetting: string;
-}
+};
 ```
 
 2. Settings automatically regenerate on next `yarn dev`
 
 3. Use in component:
+
 ```typescript
 const { newSetting } = state.settings;
 ```
@@ -364,12 +372,14 @@ yarn preview    # Preview at http://localhost:4173
 ## File Organization
 
 ### Do Not Commit
+
 - `src/settings/index.json` - User-specific downloaded settings
 - `src/settings/.generated.json` - Auto-generated from schema
 - `build/` - Build output
 - `node_modules/` - Dependencies
 
 ### Do Commit
+
 - `src/schema.ts` - Settings schema (source of truth)
 - `src/analytics-schema.ts` - Analytics configuration
 - All scripts in `scripts/`

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { connectPhyClient, type PhyHubClient } from '@phystack/hub-client';
-import { getDevSettings, isDevMode } from './utils/dev-mode';
-import logo from './phystack-logo.svg';
-import type { Settings } from './schema';
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { connectPhyClient, type PhyHubClient } from "@phystack/hub-client";
+import { getDevSettings, isDevMode } from "./utils/dev-mode";
+import logo from "./phystack-logo.svg";
+import type { Settings } from "./schema";
 
 interface AppState {
   client: PhyHubClient | null;
   settings: Settings | null;
-  signals: PhyHubClient['signals'] | null;
+  signals: PhyHubClient["signals"] | null;
   error: Error | null;
   isLoading: boolean;
 }
@@ -41,7 +41,7 @@ function App() {
         } else {
           const client = await connectPhyClient();
           const signals = await client.initializeSignals();
-          const settings = await client.getSettings() as Settings;
+          const settings = (await client.getSettings()) as Settings;
 
           if (!cancelled) {
             setState({
@@ -54,11 +54,12 @@ function App() {
           }
         }
       } catch (err) {
-        console.error('Error initializing app:', err);
+        console.error("Error initializing app:", err);
         if (!cancelled) {
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
-            error: err instanceof Error ? err : new Error('Failed to initialize'),
+            error:
+              err instanceof Error ? err : new Error("Failed to initialize"),
             isLoading: false,
           }));
         }
@@ -129,7 +130,7 @@ const ProductInfo = styled.header`
   flex: 1;
   padding-bottom: 64px;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 `;
 
 const Logo = styled.img`

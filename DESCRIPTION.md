@@ -1,4 +1,5 @@
 # {{applicationName}}
+
 by {{author}}
 
 A modern Vite-based React template for Phystack Grid Apps.
@@ -20,6 +21,7 @@ Description file is not always published with the app. To publish the descriptio
 - Modern React 18
 
 ## Headers
+
 - lists
 - are
 - also

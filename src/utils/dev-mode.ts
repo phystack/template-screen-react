@@ -5,7 +5,7 @@
  *
  * Settings are auto-initialized by `yarn dev` (via predev script).
  */
-import type { Settings } from '../schema';
+import type { Settings } from "../schema";
 
 export const getDevSettings = async (): Promise<Settings> => {
   // Priority 1: Try downloaded settings (persistent)
@@ -13,29 +13,31 @@ export const getDevSettings = async (): Promise<Settings> => {
   const tryImport = async (path: string) => {
     try {
       const module = await import(/* @vite-ignore */ path);
-      return module.default?.app?.gridApp?.settings
-        || module?.app?.gridApp?.settings
-        || null;
+      return (
+        module.default?.app?.gridApp?.settings ||
+        module?.app?.gridApp?.settings ||
+        null
+      );
     } catch {
       return null;
     }
   };
 
   // Try index.json first
-  const downloaded = await tryImport('../settings/index.json');
+  const downloaded = await tryImport("../settings/index.json");
   if (downloaded) {
-    console.log('📥 Using downloaded settings from index.json');
+    console.log("📥 Using downloaded settings from index.json");
     return downloaded;
   }
 
   // Fall back to .generated.json
-  const generated = await tryImport('../settings/.generated.json');
+  const generated = await tryImport("../settings/.generated.json");
   if (generated) {
-    console.log('🔨 Using schema defaults from .generated.json');
+    console.log("🔨 Using schema defaults from .generated.json");
     return generated;
   }
 
-  console.warn('⚠️  No settings found. Run `yarn dev` to initialize settings');
+  console.warn("⚠️  No settings found. Run `yarn dev` to initialize settings");
   return {} as Settings;
 };
 

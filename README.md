@@ -32,6 +32,7 @@ yarn dev
 ```
 
 The dev server automatically:
+
 1. Generates settings from schema defaults (ephemeral)
 2. Starts Vite dev server with HMR on http://localhost:3000
 3. Watches for schema changes and regenerates settings
@@ -41,12 +42,14 @@ The dev server automatically:
 The template uses a **priority-based settings system**:
 
 ### Priority Order
+
 1. **`src/settings/index.json`** - Downloaded from installation (persistent, gitignored)
 2. **`src/settings/.generated.json`** - Generated from schema (ephemeral, auto-created)
 
 ### Development Workflows
 
 **Using schema defaults (ephemeral):**
+
 ```bash
 yarn dev
 # ✅ Auto-generates .generated.json from src/schema.ts
@@ -55,6 +58,7 @@ yarn dev
 ```
 
 **Using real installation data (persistent):**
+
 ```bash
 yarn download-settings <installation-name>
 # ✅ Downloads to src/settings/index.json
@@ -67,6 +71,7 @@ yarn dev
 ```
 
 **Switch back to schema defaults:**
+
 ```bash
 rm src/settings/index.json
 yarn dev
@@ -98,22 +103,27 @@ yarn dev
 ## Available Scripts
 
 ### Development
+
 - `yarn dev` / `yarn start` - Start dev server with auto-settings initialization
 - `yarn preview` - Preview production build locally
 
 ### Building
+
 - `yarn build` - Production build with schema generation
 - `yarn schema` - Generate settings and analytics schemas
 
 ### Settings Management
+
 - `yarn download-settings <name>` - Download settings from installation
 
 ### Deployment
+
 - `yarn pub` - Publish app to Phystack Grid
 - `yarn upload-description` - Upload DESCRIPTION.md
 - `yarn connect` - Connect to dev WebSocket
 
 ### Code Quality
+
 - `yarn lint` - Run ESLint
 
 ## Configuration
@@ -138,7 +148,7 @@ export type Settings = {
    * @default "99 USD"
    */
   productPrice: string;
-}
+};
 
 export default Settings;
 ```
@@ -150,14 +160,21 @@ The `@default` annotations are used to generate `src/settings/.generated.json`.
 Edit `src/analytics-schema.ts` to customize analytics dashboards:
 
 ```typescript
-import { AnalyticsSchema, CardType, SessionInteractionType } from '@ombori/grid-reports';
+import {
+  AnalyticsSchema,
+  CardType,
+  SessionInteractionType,
+} from "@ombori/grid-reports";
 
 const analyticsSchema: AnalyticsSchema = {
   groups: [
     {
-      name: 'Overview',
+      name: "Overview",
       cards: [
-        { type: CardType.Sessions, interactionType: SessionInteractionType.Interactive },
+        {
+          type: CardType.Sessions,
+          interactionType: SessionInteractionType.Interactive,
+        },
       ],
     },
   ],
@@ -223,6 +240,7 @@ build: {
 ## Compatibility
 
 ✅ Compatible with:
+
 - Tizen 4 devices (Samsung Smart Signage)
 - omg-deploys Azure Functions
 - @phystack/cli deployment tools
@@ -298,6 +316,7 @@ yarn build
 ### Hub client connection fails in dev
 
 Make sure you're using schema-generated settings:
+
 ```bash
 rm src/settings/index.json  # Remove downloaded settings
 yarn dev                     # Use schema defaults
