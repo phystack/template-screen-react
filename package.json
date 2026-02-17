@@ -19,6 +19,7 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "download-settings": "phy app settings",
+    "prepub": "echo '\\n⚠️  Before publishing, run /stability-audit in Claude Code to check for memory leaks and resource issues.\\n'",
     "pub": "phy app publish",
     "upload-description": "phy app upload-description",
     "connect": "phy dev ws",

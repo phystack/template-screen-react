@@ -176,7 +176,24 @@ Answer these three questions during the reflect step:
 2. **"What's changed that other files should know about?"** -> Update docs/README/CLAUDE.md
 3. **"Is the documentation still accurate?"** -> Fix any drift
 
-## Step 9: Create PR
+## Step 9: Stability Audit
+
+Run `/stability-audit` on the changed components to check for resource leaks and always-on device issues:
+
+1. Run `/stability-audit` scoped to the files changed in this feature
+2. If critical or high issues are found, fix them before proceeding
+3. Re-run `yarn test` and `yarn build` after any fixes
+
+This step is required for features that add or change:
+- `useEffect` hooks, timers, intervals, or animation frames
+- Media streams, camera access, or hardware APIs
+- WebSocket connections or persistent network requests
+- State that accumulates across sessions
+- Canvas, blob, or object URL usage
+
+For features with no runtime resource changes (e.g., static UI, schema-only), note "No runtime resource changes — stability audit skipped" and proceed.
+
+## Step 10: Create PR
 
 ```bash
 git add -A

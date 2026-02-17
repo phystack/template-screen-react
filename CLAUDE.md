@@ -50,6 +50,15 @@ yarn upload-description     # Upload DESCRIPTION.md to marketplace
 yarn connect                # Connect to dev WebSocket
 ```
 
+## Publishing
+
+**IMPORTANT:** Before publishing (`yarn pub`), you MUST run `/stability-audit` first. This is a hard requirement — never publish without a passing stability audit. These apps run on always-on, unattended hardware where a leaked timer or unclosed stream will eventually crash the device with no one around to restart it.
+
+Publish workflow:
+1. `yarn build` — ensure production build succeeds
+2. `/stability-audit` — fix any critical or high issues
+3. `yarn pub` — publish to PhyStack Grid
+
 ## Git Commit Guidelines
 
 **IMPORTANT:** DO NOT add "Co-Authored-By: Claude" or any similar attribution to commit messages in this repository. Keep commits clean and professional without AI attribution.
