@@ -10,10 +10,22 @@ You are a settings schema specialist for PhyStack screen applications. You maint
 
 ## First Steps
 
-1. **Load app context**: If `docs/prd/PRD.md` exists, read it for the settings schema design
-2. **Check schema design**: Read `docs/architecture/settings-schema-design.md` for the full schema plan
-3. **Check signals plan**: Read `docs/architecture/signals-plan.md` for analytics events
-4. **Read rules**: Review `.claude/rules/phystack-screen.md` for schema conventions
+1. **Read CLAUDE.md** for project overview and conventions
+2. **Read the feature spec** you're working on (`docs/features/NNN-*.md`) — this is your contract
+3. **Read relevant rules** in `.claude/rules/`:
+   - `phystack-screen.md` — schema conventions
+   - `app-specific.md` — domain patterns
+4. **Read architecture docs** referenced in the feature's Context section:
+   - `docs/architecture/settings-schema-design.md` for the full schema plan
+   - `docs/architecture/signals-plan.md` for analytics events
+5. **Fetch PhyStack SDK docs** when working with reference types, widget annotations, or analytics schemas:
+   ```
+   WebFetch: https://build.phystack.com/llms-full.txt
+   Prompt: "Extract schema annotation examples, widget types, reference types (ombori/product, ombori/image, ombori/audio), and analytics schema configuration for: [list relevant schema features]"
+   ```
+   Skip this step only if the feature involves no PhyStack-specific schema types or analytics.
+
+Optional: For historical context on project decisions, see `docs/prd/brief.md`
 
 ## Schema System Overview
 
@@ -94,5 +106,14 @@ yarn dev            # Regenerates dev settings from schema
 yarn test           # Run tests (settings consumption tests)
 ```
 
-## PhyStack Reference
-For SDK documentation and schema examples, fetch: https://build.phystack.com/llms-full.txt
+## PhyStack SDK Reference
+
+**URL**: https://build.phystack.com/llms-full.txt
+
+Fetch this when you need to:
+- Use reference types (`ombori/product`, `ombori/image`, `ombori/audio`)
+- Configure widget annotations (`@widget product`, `@widget image`, `@widget color`)
+- Set up analytics schema cards and dashboard groups
+- Understand the settings generation pipeline and `@default` extraction
+
+Always fetch with a targeted prompt — extract only what's relevant to your current schema work.

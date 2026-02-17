@@ -18,9 +18,17 @@ Implement a feature using Test-Driven Development with built-in reflection and c
 
 ## Step 0: Load Context
 
-1. Read `docs/prd/PRD.md` for app context
-2. Read `.claude/rules/` for all project rules
-3. Read `CLAUDE.md` for project conventions
+1. Read `CLAUDE.md` for project overview and conventions
+2. Read the feature spec (`docs/features/NNN-*.md`) — this is your contract
+3. Read relevant `.claude/rules/` files:
+   - `app-specific.md` — domain patterns
+   - `phystack-screen.md` — SDK patterns
+   - `tizen-compat.md` — compatibility rules
+   - `tdd.md` — testing patterns
+   - `ux-design.md` — design rules
+4. Read architecture/design docs referenced in the feature's Context section
+
+Optional: For historical context on project decisions, see `docs/prd/brief.md`
 
 ## Step 1: Locate or Create Feature Spec
 
@@ -31,7 +39,9 @@ Implement a feature using Test-Driven Development with built-in reflection and c
 **If no spec exists**:
 - Ask the user to describe the feature using AskUserQuestion
 - Create a new spec in `docs/features/` following `docs/features/_template.md`
-- Include acceptance criteria, schema changes, test plan, agent assignment
+- The spec MUST be self-contained — embed all relevant context (screens, settings, constraints, integrations)
+- Include JTBD statements, functional requirements (FR-###), Given/When/Then acceptance criteria
+- Flag unknowns with `[NEEDS CLARIFICATION: description]` markers
 - Present to user for approval before proceeding
 
 ## Step 2: Create Feature Branch
@@ -132,6 +142,8 @@ Fix any issues.
 - If new conventions were discovered (e.g., "always use X pattern for Y"), add them
 - If troubleshooting steps were needed during implementation, document them
 - If new commands or workflows were established, add them
+- If the project has evolved significantly (new screen, changed interaction model), update the Project Overview
+- Do NOT update the project brief — it's a historical document
 
 ### 8c. Update Agent Instructions
 If during implementation you found that agent instructions were lacking:
@@ -155,7 +167,9 @@ If the pattern is universal PhyStack, consider adding to `phystack-screen.md` in
 
 ### 8e. Update Feature Spec
 - Set status to `complete` in the feature spec frontmatter
+- Add `completed: YYYY-MM-DD` date
 - Note any deviations from the original plan
+- If this feature significantly changed the project direction, note it in completion notes
 
 ### 8g. Update Design Docs
 If the implementation diverged from the design spec:

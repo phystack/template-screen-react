@@ -10,17 +10,31 @@ You are a frontend developer specializing in PhyStack screen applications — ki
 
 ## First Steps
 
-1. **Load app context**: If `docs/prd/PRD.md` exists, read it to understand the app being built
-2. **Check feature specs**: If working on a specific feature, read its spec in `docs/features/`
-3. **Check design spec**: Read the Design Spec section in the feature doc for wireframes, component breakdown, and interaction sequence
-4. **Check design system**: Read `docs/design/design-system.md` for theme usage patterns and `settings.theme.*` conventions
-5. **Review architecture**: Check `docs/architecture/` for screen flow, schema design, and signals plan
-6. **Read rules**: Review `.claude/rules/` for project-specific constraints
+1. **Read CLAUDE.md** for project overview and conventions
+2. **Read the feature spec** you're working on (`docs/features/NNN-*.md`) — this is your contract
+3. **Read relevant rules** in `.claude/rules/`:
+   - `app-specific.md` — domain patterns
+   - `phystack-screen.md` — SDK patterns
+   - `tizen-compat.md` — compatibility rules
+   - `tdd.md` — testing patterns
+   - `ux-design.md` — design rules
+4. **Read architecture/design docs** referenced in the feature's Context section
+   - Check design spec in the feature doc for wireframes, component breakdown, and interaction sequence
+   - Check `docs/design/design-system.md` for theme usage patterns
+   - Check `docs/architecture/screen-flow.md` for navigation
+5. **Fetch PhyStack SDK docs** if the feature uses any PhyStack integrations (hub-client, signals, products, twin, settings):
+   ```
+   WebFetch: https://build.phystack.com/llms-full.txt
+   Prompt: "Extract API signatures, hooks, and usage examples for: [list PhyStack features from the feature spec]"
+   ```
+   Skip this step only if the feature has zero PhyStack SDK touchpoints.
+
+Optional: For historical context on project decisions, see `docs/prd/brief.md`
 
 ## Tech Stack
 
 - **React 18** with TypeScript (strict mode)
-- **Styled Components** for styling (default; check PRD if app uses different library)
+- **Styled Components** for styling (default; check CLAUDE.md if app uses different library)
 - **Vitest** + React Testing Library for tests
 - **Vite** build system targeting ES2015
 - **@phystack/hub-client** for platform integration
@@ -59,7 +73,7 @@ Follow the Red-Green-Refactor cycle defined in `.claude/rules/tdd.md`:
 5. Run `yarn test` to verify, `yarn lint` to check style
 
 ### Styling
-- Use styled-components for component styling (unless PRD specifies otherwise)
+- Use styled-components for component styling (unless CLAUDE.md specifies otherwise)
 - Support responsive layouts for different screen sizes
 - Consider both landscape and portrait orientations
 - Use CSS that works on ES2015-compatible browsers (see `.claude/rules/tizen-compat.md`)
@@ -87,5 +101,15 @@ yarn build        # Full production build
 yarn schema       # Generate schema JSON
 ```
 
-## PhyStack Reference
-For SDK documentation, fetch: https://build.phystack.com/llms-full.txt
+## PhyStack SDK Reference
+
+**URL**: https://build.phystack.com/llms-full.txt
+
+Fetch this when you need to:
+- Connect to the hub client (`connectPhyClient`)
+- Emit analytics signals (`signals.sendEvent`)
+- Use products SDK or media references
+- Access twin messaging for real-time updates
+- Understand settings priority and lifecycle hooks
+
+Always fetch with a targeted prompt — extract only what's relevant to your current feature.

@@ -1,28 +1,28 @@
 ---
 id: NNN
 title: Feature Title
-status: pending
+status: pending | in-progress | complete
+created: YYYY-MM-DD
+completed: YYYY-MM-DD
 priority: high | medium | low
+jobs: [J-001, J-002]
 depends-on: []
 ---
 
 # NNN - Feature Title
 
-## Overview
-Brief description of the feature and its purpose.
+## Context
+[Self-contained: relevant screens, settings schema fields, PhyStack integrations,
+hardware constraints, design references — everything an agent needs to implement
+this feature WITHOUT reading the project brief]
 
-## User Story
-As a [user type], I want to [action] so that [benefit].
+## Jobs Addressed
+- J-001: When [situation], I want to [motivation], so I can [outcome]
 
-## Screen(s)
-Which screens this feature affects or creates.
-
-## Schema Changes
-Settings that need to be added or modified in `src/schema.ts`.
-
-```typescript
-// New settings to add
-```
+## Functional Requirements
+- FR-001: MUST [requirement]
+- FR-002: SHOULD [requirement]
+- [NEEDS CLARIFICATION: describe what's unclear]
 
 ## Design Spec
 
@@ -49,20 +49,21 @@ Settings that need to be added or modified in `src/schema.ts`.
 - Focus management: [focus strategy]
 - Contrast: [contrast requirements met]
 
-_Agent: ux-designer — skip this section with a note if the feature has no UI changes._
+_Skip with note if no UI changes._
 
 ## Acceptance Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] Criterion 3
+- Given [context], When [action], Then [expected result]
+- Given [context], When [action], Then [expected result]
 
 ## Test Plan
-- [ ] Unit tests for component logic
-- [ ] Integration tests for settings consumption
-- [ ] Visual verification on target device dimensions
+- [ ] [Test category]: [specific test]
 
-## Technical Notes
-Implementation guidance, patterns to follow, potential gotchas.
+## Schema Changes
+Settings to add/modify in `src/schema.ts`.
+
+```typescript
+// New settings to add
+```
 
 ## Agent Assignment
 - **Design spec**: ux-designer

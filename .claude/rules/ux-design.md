@@ -25,7 +25,7 @@
 - Use schema theme fields for all visual styling in components
 - Do not introduce ad-hoc color values, spacing, or border-radius
 - New design tokens must be added to `src/schema.ts` theme section first
-- Styled-components should consume `settings.theme.*` values, not literal CSS values
+- Components should consume `settings.theme.*` values, not literal CSS values (check CLAUDE.md for the chosen styling framework)
 - If a new token is needed, add it to the schema with a TenantSettings-aligned name
 
 ## Interaction Design Requirements
