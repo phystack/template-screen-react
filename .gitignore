@@ -33,6 +33,9 @@ src/settings/.generated.json
 *.sln
 *.sw?
 
+# Test coverage
+coverage/
+
 # OS
 .DS_Store
 Thumbs.db
