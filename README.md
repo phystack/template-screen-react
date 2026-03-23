@@ -71,8 +71,6 @@ src/
   main.tsx              # Entry point (createRoot)
   schema.ts             # Settings schema (source of truth)
   analytics-schema.ts   # Analytics dashboard configuration
-  utils/
-    dev-mode.ts         # Priority-based settings loader
 scripts/
   init-settings.js      # Pre-dev settings generation
   build-schema.js       # Schema build step
@@ -87,7 +85,8 @@ vite.config.ts          # Vite config with Node.js polyfills
 
 | Script | Description |
 |--------|-------------|
-| `yarn dev` | Start dev server with auto-settings initialization |
+| `yarn dev` | Launch app with the local simulator (`phy simulator run .`) |
+| `yarn start` | Start Vite dev server directly (requires simulator running separately) |
 | `yarn build` | Production build (TypeScript, Vite, schema, post-processing) |
 | `yarn lint` | Run ESLint |
 | `yarn preview` | Preview production build locally |

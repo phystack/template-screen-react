@@ -16,11 +16,8 @@ dist
 dist-ssr
 *.local
 
-# Development settings
-# index.json = downloaded from installation (persistent, user-specific)
-# .generated.json = auto-generated from schema (ephemeral)
-src/settings/index.json
-src/settings/.generated.json
+# Local settings (auto-generated, downloaded, or manually edited)
+src/settings/
 
 # Editor directories and files
 .vscode/*

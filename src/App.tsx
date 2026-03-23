@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { connectPhyClient, type PhyHubClient } from "@phystack/hub-client";
-import { getDevSettings, isDevMode } from "./utils/dev-mode";
 import logo from "./phystack-logo.svg";
 import type { Settings } from "./schema";
 
@@ -27,31 +26,18 @@ function App() {
 
     const initialize = async () => {
       try {
-        if (isDevMode()) {
-          const settings = await getDevSettings();
-          if (!cancelled) {
-            setState({
-              client: null,
-              settings,
-              signals: null,
-              error: null,
-              isLoading: false,
-            });
-          }
-        } else {
-          const client = await connectPhyClient();
-          const signals = await client.initializeSignals();
-          const settings = (await client.getSettings()) as Settings;
+        const client = await connectPhyClient();
+        const signals = await client.initializeSignals();
+        const settings = (await client.getSettings()) as Settings;
 
-          if (!cancelled) {
-            setState({
-              client,
-              settings,
-              signals,
-              error: null,
-              isLoading: false,
-            });
-          }
+        if (!cancelled) {
+          setState({
+            client,
+            settings,
+            signals,
+            error: null,
+            isLoading: false,
+          });
         }
       } catch (err) {
         console.error("Error initializing app:", err);
