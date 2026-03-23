@@ -7,49 +7,40 @@ import { fileURLToPath } from "url";
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const settingsDir = path.join(rootDir, "src/settings");
-const downloadedSettingsPath = path.join(settingsDir, "index.json");
-const generatedSettingsPath = path.join(settingsDir, ".generated.json");
+const customDir = process.argv[2];
+const settingsDir = customDir
+  ? path.resolve(rootDir, customDir)
+  : path.join(rootDir, "src/settings");
+const settingsPath = path.join(settingsDir, "index.json");
 
 /**
- * Initialize settings with priority system:
+ * Initialize settings if they don't already exist.
  *
- * 1. ALWAYS regenerate .generated.json from schema defaults (ephemeral)
- * 2. If index.json exists (downloaded manually), keep it (persistent)
- * 3. App will use index.json if it exists, otherwise .generated.json
+ * - If src/settings/index.json exists (generated, edited, or downloaded), keep it.
+ * - If it doesn't exist, generate it from src/schema.ts defaults.
  *
  * To download settings from an installation:
- *   phystack app settings <installation-name> > src/settings/index.json
+ *   yarn download-settings <installation-name>
+ *
+ * To reset to schema defaults:
+ *   Delete src/settings/index.json and re-run yarn dev
  */
 async function initSettings() {
-  console.log("⚙️  Initializing settings...");
-
   // Ensure settings directory exists
   if (!fs.existsSync(settingsDir)) {
     fs.mkdirSync(settingsDir, { recursive: true });
   }
 
-  // ALWAYS regenerate .generated.json from schema
-  await generateFromSchema();
-
-  // Check if downloaded settings exist
-  if (fs.existsSync(downloadedSettingsPath)) {
-    console.log("✅ Using downloaded settings from src/settings/index.json");
-    console.log(
-      "ℹ️  To use schema defaults instead, delete src/settings/index.json"
-    );
+  // If settings already exist, keep them
+  if (fs.existsSync(settingsPath)) {
+    console.log("✅ Using existing settings from src/settings/index.json");
     return;
   }
 
-  // No downloaded settings - app will use .generated.json
-  console.log("ℹ️  Using schema defaults from src/settings/.generated.json");
-  console.log("💡 To download from installation:");
-  console.log("   yarn download-settings <installation-name>");
+  // Generate from schema defaults
+  await generateFromSchema();
 }
 
-/**
- * Always regenerate settings from schema defaults (ephemeral)
- */
 async function generateFromSchema() {
   try {
     console.log("🔨 Generating settings from schema defaults...");
@@ -85,12 +76,12 @@ async function generateFromSchema() {
       },
     };
 
-    fs.writeFileSync(generatedSettingsPath, JSON.stringify(settings, null, 2));
-    console.log("✅ Generated ephemeral settings from schema");
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+    console.log("✅ Generated settings from schema defaults");
   } catch (error) {
     console.error("❌ Failed to generate settings from schema:", error.message);
 
-    // Create minimal empty generated settings
+    // Create minimal empty settings
     const minimalSettings = {
       app: {
         gridApp: {
@@ -99,11 +90,8 @@ async function generateFromSchema() {
       },
     };
 
-    fs.writeFileSync(
-      generatedSettingsPath,
-      JSON.stringify(minimalSettings, null, 2)
-    );
-    console.log("⚠️  Created empty generated settings");
+    fs.writeFileSync(settingsPath, JSON.stringify(minimalSettings, null, 2));
+    console.log("⚠️  Created empty settings");
   }
 }
 
@@ -118,7 +106,6 @@ function extractDefaults(schema) {
       if (prop.default !== undefined) {
         defaults[key] = prop.default;
       } else if (prop.type === "object" && prop.properties) {
-        // Recursively extract defaults from nested objects
         defaults[key] = extractDefaults(prop);
       } else if (prop.type === "array" && prop.default) {
         defaults[key] = prop.default;

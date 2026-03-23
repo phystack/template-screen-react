@@ -46,21 +46,14 @@ yarn connect                # Connect to dev WebSocket
 
 ## Settings System Architecture
 
-### Priority-Based Settings
+### Settings File
 
-The template uses a modern **two-file settings system**:
+The template uses a single **`src/settings/index.json`** file (gitignored):
 
-1. **`src/settings/index.json`** (Priority 1)
-   - Downloaded from real Phystack installations
-   - Persistent across dev runs
-   - Gitignored (user-specific)
-   - Created via: `yarn download-settings <name>`
-
-2. **`src/settings/.generated.json`** (Priority 2 - Fallback)
-   - Generated from `src/schema.ts` defaults
-   - Ephemeral (regenerated on every `yarn dev`)
-   - Gitignored (auto-created)
-   - Always kept fresh with schema changes
+- Auto-generated from `src/schema.ts` defaults on first `yarn dev` if it doesn't exist
+- Can be manually edited to test different settings
+- Can be overwritten with real settings via `yarn download-settings <installation-name>`
+- To reset to schema defaults, delete the file and re-run `yarn dev`
 
 ### Settings Loading Flow
 
@@ -69,26 +62,12 @@ yarn dev
   ↓
 predev hook: node scripts/init-settings.js
   ↓
-ALWAYS generate .generated.json from schema
+index.json exists?
+  ├─ YES → Keep it (no changes)
+  └─ NO  → Generate from schema.ts defaults
   ↓
-Check if index.json exists?
-  ├─ YES → Use index.json (downloaded)
-  └─ NO  → Use .generated.json (schema defaults)
-  ↓
-App.tsx loads settings via dev-mode.ts
-  ↓
-Try import index.json
-  ├─ SUCCESS → Use downloaded settings
-  └─ FAIL    → Use .generated.json
+Simulator loads settings and provides them via hub-client
 ```
-
-### Key Benefits
-
-- ✅ Schema is single source of truth for defaults
-- ✅ No manual `default.settings.json` to maintain
-- ✅ Schema changes automatically reflected
-- ✅ Easy switch between real and mock data
-- ✅ Persistent downloaded settings when needed
 
 ## Build Process
 
@@ -281,7 +260,7 @@ export type Settings = {
 };
 ```
 
-The `@default` values are extracted to generate `src/settings/.generated.json`.
+The `@default` values are extracted to generate `src/settings/index.json` on first run.
 
 ### Analytics Schema (`src/analytics-schema.ts`)
 
@@ -359,7 +338,7 @@ yarn dev  # Uses downloaded settings
 
 # Switch back to schema defaults
 rm src/settings/index.json
-yarn dev  # Uses .generated.json
+yarn dev  # Regenerates from schema defaults
 ```
 
 ### Testing Build Locally
@@ -373,8 +352,7 @@ yarn preview    # Preview at http://localhost:4173
 
 ### Do Not Commit
 
-- `src/settings/index.json` - User-specific downloaded settings
-- `src/settings/.generated.json` - Auto-generated from schema
+- `src/settings/index.json` - Local settings (generated, downloaded, or edited)
 - `build/` - Build output
 - `node_modules/` - Dependencies
 
