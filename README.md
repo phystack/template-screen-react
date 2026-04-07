@@ -14,9 +14,9 @@ This template does not deploy anywhere on its own.
 |-------|------------|
 | Runtime | Node.js 24 |
 | Framework | React 18, Vite 7 |
-| Language | TypeScript 5.9 (strict) |
+| Language | TypeScript 5.9 |
 | Styling | Styled Components 5 |
-| Hub integration | @phystack/hub-client |
+| Platform client | @phystack/hub-client |
 | Analytics | @ombori/grid-reports |
 | Build target | ES2015 (Tizen 4 compatible) |
 
@@ -97,14 +97,6 @@ vite.config.ts          # Vite config with simulator support and Node.js polyfil
 | `yarn lint` | Run ESLint |
 | `yarn format` | Format code with Prettier |
 | `yarn upload-description` | Upload the app description to your tenant |
-
-## Troubleshooting
-
-**Settings not loading** -- Delete `src/settings/` and re-run `yarn dev` to regenerate from the schema.
-
-**Build fails** -- Remove `build/` and `node_modules/`, then `yarn install && yarn build`.
-
-**Vite HMR not working** -- Ensure port 3000 is free, then clear the Vite cache with `rm -rf node_modules/.vite` and restart.
 
 ## Related Documentation
 
