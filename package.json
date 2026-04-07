@@ -6,6 +6,9 @@
   "homepage": "./",
   "type": "module",
   "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "predev": "node scripts/init-settings.js",
@@ -24,7 +27,7 @@
   },
   "dependencies": {
     "@ombori/grid-reports": "^3.37.4",
-    "@phystack/hub-client": "^4.4.66",
+    "@phystack/hub-client": "^4.4.71",
     "events": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -32,8 +35,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@phystack/cli": "^4.4.66",
-    "@phystack/ts-schema": "^4.4.66",
+    "@phystack/cli": "^4.4.71",
+    "@phystack/ts-schema": "^4.4.71",
     "@types/node": "^24.6.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
