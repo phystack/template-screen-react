@@ -1,10 +1,10 @@
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
 const customDir = process.argv[2];
@@ -54,8 +54,9 @@ async function generateFromSchema() {
     }
 
     // Generate schema with ts-schema
-    await execAsync(
-      `npx ts-schema ${schemaPath} ${path.join(rootDir, "build")}`,
+    await execFileAsync(
+      "npx",
+      ["ts-schema", schemaPath, path.join(rootDir, "build")],
       {
         cwd: rootDir,
       }
