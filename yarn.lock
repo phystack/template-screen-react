@@ -501,24 +501,26 @@
   resolved "https://registry.yarnpkg.com/@ombori/grid-reports/-/grid-reports-3.92.13.tgz#1f254dd031405d990cfe0529c84f3128a0df9079"
   integrity sha512-IMhjoinTW7juTbH9xrslNno2WcLwF1uYQ7e1LXGlP0RXYGmddEhZmgpyL8FhD8emImSE8QX6EacEqevolp0/8g==
 
-"@phystack/cli@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/cli/-/cli-6.0.0.tgz#c520c7c75374f38d6c3b3c095583cf4c75dfb04e"
-  integrity sha512-jBfGVlElfyqAGKrGs2Xah2ofaTvLkkarEfeRpcEmYWQMAngESKVTGuvlQpyhK7hOhNfj4nNrp+bTswNBGTHd1g==
+"@phystack/cli@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/cli/-/cli-6.2.0.tgz#26504a9c70f47e6d1af4f2695852813ffc2c32da"
+  integrity sha512-FEie7cW4RcschWmOyX8w0i2/cqmXH695Xh8+g1D8JmTeFO79+L6qh6ZUCGcEk296MXYqOtq+xxv0HstrfPFvBw==
   optionalDependencies:
-    "@phystack/phy-darwin-arm64" "6.0.0"
-    "@phystack/phy-darwin-x64" "6.0.0"
-    "@phystack/phy-linux-arm64" "6.0.0"
-    "@phystack/phy-linux-x64" "6.0.0"
-    "@phystack/phy-win32-arm64" "6.0.0"
-    "@phystack/phy-win32-x64" "6.0.0"
+    "@phystack/phy-darwin-arm64" "6.2.0"
+    "@phystack/phy-darwin-x64" "6.2.0"
+    "@phystack/phy-linux-arm64" "6.2.0"
+    "@phystack/phy-linux-arm64-musl" "6.2.0"
+    "@phystack/phy-linux-x64" "6.2.0"
+    "@phystack/phy-linux-x64-musl" "6.2.0"
+    "@phystack/phy-win32-arm64" "6.2.0"
+    "@phystack/phy-win32-x64" "6.2.0"
 
-"@phystack/hub-client@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/hub-client/-/hub-client-6.0.0.tgz#60d71a1d51a76e91ff232172eb685cd7a9dd894d"
-  integrity sha512-FqnqfPufegTtSzT07HSn77qDsQlhu2WI+Yu+kGJ5eEG951vTPF6w7S1AcqD58Fc2ejh1ltwlSdi+lX15Ns6Bcg==
+"@phystack/hub-client@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/hub-client/-/hub-client-6.2.0.tgz#606fd8d621a97df4d8b7846ce3c11b5f46ab4c39"
+  integrity sha512-A3ZOjYcI1urjb7ngWIWfAW5UjAgtoCIc8Zx8a+2A98zui5dxRr9W/jn3ybFtWbuYwYIfqxtJFqBCUpP2mv2qRg==
   dependencies:
-    "@phystack/socket.io-proxy" "6.0.0"
+    "@phystack/socket.io-proxy" "6.2.0"
     axios "^1.7.9"
     lodash "^4.17.21"
     lodash.isnil "^4.0.0"
@@ -533,40 +535,50 @@
     https-proxy-agent "^7.0.6"
     utf-8-validate "^6.0.5"
 
-"@phystack/phy-darwin-arm64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-darwin-arm64/-/phy-darwin-arm64-6.0.0.tgz#5339ae5ea038d8517561a0522192f2cdf59b9823"
-  integrity sha512-DqeE1L4BDV9GaF4SU8bOwcos4jVtLtmlGeI3j4KEOQV8pCHkIsDgc67Gp3RQINn4eZGeWYkkPE9CmsQhENHl6w==
+"@phystack/phy-darwin-arm64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-darwin-arm64/-/phy-darwin-arm64-6.2.0.tgz#dd68c3dfebcae32f2cdd47a61e0124342ba4d5c0"
+  integrity sha512-dHrtZiP/eaSWUgrysSc97rb/5fX/dS1cBl8fI5XiXmVdP5FZmgDfgA2Lh1Fx+gUSs3QrjsnTAyXgSIB99PBTOg==
 
-"@phystack/phy-darwin-x64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-darwin-x64/-/phy-darwin-x64-6.0.0.tgz#294a6a40a868a3edfe41962bb9494a42f86333a7"
-  integrity sha512-9pYVrcSHKT9y6PQSl8v1ubhI+lYxm9smNF0ufWomgutr1DUkqCAt/bwHhUb7QlXpxJJxwnBnz81W2mgCInUfWA==
+"@phystack/phy-darwin-x64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-darwin-x64/-/phy-darwin-x64-6.2.0.tgz#40e930a015b9f7afc997c358d2c89201cfa7eb7e"
+  integrity sha512-ODMUKJnnCPLH8VKIEiwWduO+jAMiePm4iLByP0awp9gIvQhVDidy5LvxIbnqbxUwnPeY7gxLCnG5HGNBOEOxZA==
 
-"@phystack/phy-linux-arm64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-arm64/-/phy-linux-arm64-6.0.0.tgz#442828112d965d87a2b20a15f2ac8be5a8e07a3d"
-  integrity sha512-8LVdCe3kcwzz+m2+L/D/4wZttifDWSEDCKxd2GrzSAPEeZs/aFl1I/Xr3TeKCp/3zXcfm2cHkGAH9MD3sToZkg==
+"@phystack/phy-linux-arm64-musl@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-arm64-musl/-/phy-linux-arm64-musl-6.2.0.tgz#9477f07e2e157aabebd9d76540b90061a387585e"
+  integrity sha512-OvamgSY3RSnqMOzbvTqUN9/jPWRkJbQO6CV0hyUPiqysp0ouswHPlf42Ez2OWUfB4azNBfQ3T+G5iv9jEZZvGA==
 
-"@phystack/phy-linux-x64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-x64/-/phy-linux-x64-6.0.0.tgz#dc009a25d6a21f88aa77a6e29e492cc4922b7bd5"
-  integrity sha512-qyuu512L/NAnCiUcfritkTD3gYO4TO/6UaiIPpkEzw+3SxzWFKEjnK0dkor0mfNiQBmZtfr+FaZ2ZiYr3/7EYw==
+"@phystack/phy-linux-arm64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-arm64/-/phy-linux-arm64-6.2.0.tgz#5ebc905440ba0f261e1208692089218a58ce103a"
+  integrity sha512-mUsjxOfGzKwpzynMGeX8drvR3ntDnplRddRV8KyEqCZjl8zzfDKhj2sLmmiXUac2qOoOsaQNqXQ1pw/5t4ilzg==
 
-"@phystack/phy-win32-arm64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-win32-arm64/-/phy-win32-arm64-6.0.0.tgz#0cc60268a9dc372925e3cad19c21ab37fbb89b70"
-  integrity sha512-G3RcJq+Un4KhuU4P1HCClFxpFihAbC7xyN1tBDdSq+QR+eVB+iG2y9Bhprl5nPttJZOOC84o6WnVfmP4YqiAsA==
+"@phystack/phy-linux-x64-musl@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-x64-musl/-/phy-linux-x64-musl-6.2.0.tgz#11333fe63c26d7f927489f9d1a0a1f93cb62ae29"
+  integrity sha512-c0nGBIGAlAWa1FAd6DJA0nJUR543m4mLxmyFOEycj6euFHHhAnCoiClfkrx0m5gFJQsSIGDbh82l7wZsjVcF+w==
 
-"@phystack/phy-win32-x64@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/phy-win32-x64/-/phy-win32-x64-6.0.0.tgz#9253283ef3f87b171c5ba1dff1233ff5c0b9b369"
-  integrity sha512-/tRLuU5LIitNpknp+S+nYm5mHWDwCA2Frias1oW3GYIjm/9As1VlJa21GtbGPZ1ZWOIc3gQVqyUuzQynC0nmcQ==
+"@phystack/phy-linux-x64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-linux-x64/-/phy-linux-x64-6.2.0.tgz#5b8b371f6d008046f569c45b158afb8ce0dc85df"
+  integrity sha512-5gNc5Qvn2Iapw0DlV+99zfdCj9hxsddwUdbDcPEr99NnmHS9bCDwxqsD5/7M//x1ZB5azSfb0J9HY8kXGNTOaw==
 
-"@phystack/socket.io-proxy@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@phystack/socket.io-proxy/-/socket.io-proxy-6.0.0.tgz#e867e947165b7d80047ebc6a0bc488cdbbb25e33"
-  integrity sha512-WgEJm7T3iuEWC9NMAhbd8+9drvEViaU96cK1KIqBt1hIO17OHchQITXcpmKBjRcnUp1i5vFh8lJkJkAfN5fDTw==
+"@phystack/phy-win32-arm64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-win32-arm64/-/phy-win32-arm64-6.2.0.tgz#fa9bfab28289a94329dd17419c4533c3c5456971"
+  integrity sha512-aCRitNwCFUWOoom/tUDHO81IiU/I6GwMojz1QpVnW4CxpioaQ1jh0kAZaMjwU7LzKPwe4/kHrw0Pj378bsdamQ==
+
+"@phystack/phy-win32-x64@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/phy-win32-x64/-/phy-win32-x64-6.2.0.tgz#5b79bae3947ab478b8b342fb54afba0c39ed5662"
+  integrity sha512-JRyc21ug7x25eInBpCSp2cCtIphGUubMAvKdxTjGFhquMB78kwWBPTqwj8+5/rz4NDJy71S7uFZyoxYPdVti1A==
+
+"@phystack/socket.io-proxy@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@phystack/socket.io-proxy/-/socket.io-proxy-6.2.0.tgz#fac0dbf64b59e56805745044667377e3ba8b6724"
+  integrity sha512-DaFbTUu60fWLwgO70eVwgKqpjcEVQFpoydOyIDBZtnqWcUAo/r820xYM8JaRAS2Y8p22Z9bOfOArseapTDOEiw==
   dependencies:
     axios "^1.7.9"
     socket.io-client "^4.7.5"
@@ -2178,7 +2190,16 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -2196,7 +2217,14 @@ string-width@^5.0.1, string-width@^5.1.2:
     emoji-regex "^9.2.2"
     strip-ansi "^7.0.1"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
