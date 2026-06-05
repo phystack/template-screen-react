@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Project Overview
 
-This is a modern Vite-based React TypeScript template for building Phystack Grid Apps. It replaces the old Create React App (CRA) template with a faster, more modern development experience while maintaining full compatibility with the Phystack Grid deployment infrastructure.
+This is a modern Vite-based React TypeScript template for building PhyStack Grid Apps. It replaces the old Create React App (CRA) template with a faster, more modern development experience while maintaining full compatibility with the PhyStack Grid deployment infrastructure.
 
 ## Commands
 
@@ -27,7 +27,7 @@ yarn schema     # Generate settings and analytics schemas only
 ### Settings Management
 
 ```bash
-yarn download-settings <installation-name>  # Download settings from Phystack installation
+yarn download-settings <installation-name>  # Download settings from PhyStack installation
 # Settings are downloaded to src/settings/index.json (gitignored, persistent)
 # Delete this file to revert to schema-generated defaults
 ```
@@ -35,7 +35,7 @@ yarn download-settings <installation-name>  # Download settings from Phystack in
 ### Deployment
 
 ```bash
-yarn pub                    # Publish to Phystack Grid (via @phystack/cli)
+yarn pub                    # Publish to PhyStack Grid (via @phystack/cli)
 yarn upload-description     # Upload DESCRIPTION.md to marketplace
 yarn connect                # Connect to dev WebSocket
 ```
@@ -413,6 +413,6 @@ The project uses TypeScript strict mode. Common issues:
 
 - [Vite](https://vitejs.dev/)
 - [React](https://react.dev/)
-- [Phystack](https://build.phystack.com/)
+- [PhyStack](https://build.phystack.com/)
 - [Styled Components](https://styled-components.com/)
 - [@phystack/cli](https://www.npmjs.com/package/@phystack/cli)

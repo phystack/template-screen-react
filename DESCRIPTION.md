@@ -2,7 +2,7 @@
 
 by {{author}}
 
-A modern Vite-based React template for Phystack Grid Apps.
+A modern Vite-based React template for PhyStack Grid Apps.
 
 ![Screenshot 1](meta/screen1.png)
 ![Screenshot 2](meta/screen2.png)
