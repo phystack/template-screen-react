@@ -19,7 +19,7 @@ const generatedSettingsPath = path.join(settingsDir, ".generated.json");
  * 3. App will use index.json if it exists, otherwise .generated.json
  *
  * To download settings from an installation:
- *   phystack app settings <installation-name> > src/settings/index.json
+ *   yarn download-settings <installation-id>
  */
 async function initSettings() {
   console.log("⚙️  Initializing settings...");
@@ -44,7 +44,7 @@ async function initSettings() {
   // No downloaded settings - app will use .generated.json
   console.log("ℹ️  Using schema defaults from src/settings/.generated.json");
   console.log("💡 To download from installation:");
-  console.log("   yarn download-settings <installation-name>");
+  console.log("   yarn download-settings <installation-id>");
 }
 
 /**

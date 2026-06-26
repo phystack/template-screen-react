@@ -27,17 +27,19 @@ yarn schema     # Generate settings and analytics schemas only
 ### Settings Management
 
 ```bash
-yarn download-settings <installation-name>  # Download settings from Phystack installation
+yarn download-settings <installation-id>  # Download settings from Phystack installation
 # Settings are downloaded to src/settings/index.json (gitignored, persistent)
 # Delete this file to revert to schema-generated defaults
 ```
 
 ### Deployment
 
+Requires the `phy` CLI installed globally (`npm i -g @phystack/cli@dev`):
+
 ```bash
-yarn pub                    # Publish to Phystack Grid (via @phystack/cli)
-yarn upload-description     # Upload DESCRIPTION.md to marketplace
-yarn connect                # Connect to dev WebSocket
+phy app package                                          # Package build into .gridapp archive
+phy app build create <app-id> --file <name>.gridapp      # Submit build to platform
+phy app build publish <app-id> <build-id>                # Publish submitted build
 ```
 
 ## Git Commit Guidelines
@@ -54,7 +56,7 @@ The template uses a modern **two-file settings system**:
    - Downloaded from real Phystack installations
    - Persistent across dev runs
    - Gitignored (user-specific)
-   - Created via: `yarn download-settings <name>`
+   - Created via: `yarn download-settings <installation-id>`
 
 2. **`src/settings/.generated.json`** (Priority 2 - Fallback)
    - Generated from `src/schema.ts` defaults
@@ -313,15 +315,15 @@ The template is compatible with `omg-deploys` which expects:
 - ✅ `asset-manifest.json` with files and entrypoints
 - ✅ `package.json` in build directory
 
-### @phystack/cli
+### phy CLI (global)
 
-Compatible with `phy` CLI commands:
+Requires the `phy` CLI installed globally (`npm i -g @phystack/cli@dev`):
 
 ```bash
-phy app settings <installation>  # Download settings
-phy app publish                   # Publish app
-phy app upload-description        # Upload description
-phy dev ws                        # Connect to dev WebSocket
+phy app package                                          # Package into .gridapp
+phy app build create <app-id> --file <name>.gridapp      # Submit build
+phy app build publish <app-id> <build-id>                # Publish build
+phy installation settings get <installation-id>          # Download settings
 ```
 
 ## Common Tasks
@@ -437,4 +439,4 @@ The project uses TypeScript strict mode. Common issues:
 - [React](https://react.dev/)
 - [Phystack](https://build.phystack.com/)
 - [Styled Components](https://styled-components.com/)
-- [@phystack/cli](https://www.npmjs.com/package/@phystack/cli)
+- [phy CLI](https://www.npmjs.com/package/@phystack/cli) (install globally: `npm i -g @phystack/cli@dev`)

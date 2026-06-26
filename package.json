@@ -12,16 +12,13 @@
     "start": "yarn dev",
     "schema": "mkdirp build && node scripts/build-schema.js && yarn analytics-schema",
     "analytics-schema": "node scripts/build-analytics-schema.js",
-    "bundle": "phy app build ./build ./build",
+    "bundle": "phy app package --out build/bundle.gridapp",
     "build": "tsc -b && vite build && yarn schema && node scripts/post-build.js && yarn bundle",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
-    "download-settings": "phy app settings",
-    "pub": "phy app publish",
-    "upload-description": "phy app upload-description",
-    "connect": "phy dev ws"
+    "download-settings": "phy installation settings get"
   },
   "dependencies": {
     "@ombori/grid-reports": "^3.37.4",
@@ -33,7 +30,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@phystack/cli": "^4.4.12",
     "@phystack/ts-schema": "^4.4.12",
     "@types/node": "^24.6.0",
     "@types/react": "^18.0.15",

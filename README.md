@@ -19,7 +19,7 @@ Modern Vite-based React TypeScript template for building Phystack Grid Apps.
 
 - Node.js 18+ or Bun
 - Yarn (enforced via preinstall hook)
-- [@phystack/cli](https://www.npmjs.com/package/@phystack/cli) for deployment
+- [phy CLI](https://www.npmjs.com/package/@phystack/cli) installed globally for deployment
 
 ### Installation
 
@@ -60,7 +60,7 @@ yarn dev
 **Using real installation data (persistent):**
 
 ```bash
-yarn download-settings <installation-name>
+yarn download-settings <installation-id>
 # ✅ Downloads to src/settings/index.json
 # ✅ Takes priority over .generated.json
 # ✅ Persists across dev runs
@@ -114,13 +114,15 @@ yarn dev
 
 ### Settings Management
 
-- `yarn download-settings <name>` - Download settings from installation
+- `yarn download-settings <installation-id>` - Download settings from installation
 
 ### Deployment
 
-- `yarn pub` - Publish app to Phystack Grid
-- `yarn upload-description` - Upload DESCRIPTION.md
-- `yarn connect` - Connect to dev WebSocket
+Requires the `phy` CLI installed globally (`npm i -g @phystack/cli@dev`):
+
+- `phy app package` - Package build into .gridapp archive
+- `phy app build create <app-id> --file <name>.gridapp` - Submit build
+- `phy app build publish <app-id> <build-id>` - Publish build
 
 ### Code Quality
 
@@ -243,7 +245,7 @@ build: {
 
 - Tizen 4 devices (Samsung Smart Signage)
 - omg-deploys Azure Functions
-- @phystack/cli deployment tools
+- phy CLI deployment tools (global install)
 - screen-boot deployment system
 - CRA environment variables
 - React 18+ concurrent features
@@ -263,15 +265,15 @@ This template follows React 18 best practices:
 
 ### Publishing to Phystack Grid
 
+Requires the `phy` CLI installed globally (`npm i -g @phystack/cli@dev`):
+
 ```bash
-# Build the app
+# Build the app (includes packaging into .gridapp)
 yarn build
 
-# Publish to grid
-yarn pub
-
-# Upload description and screenshots
-yarn upload-description
+# Submit and publish the build
+phy app build create <app-id> --file <name>-<version>.gridapp
+phy app build publish <app-id> <build-id>
 ```
 
 ### Setting Up in Console
@@ -285,7 +287,7 @@ yarn upload-description
 
 ```bash
 # Download from specific installation
-yarn download-settings <installation-name>
+yarn download-settings <installation-id>
 
 # Now dev mode uses real installation data
 yarn dev
@@ -328,7 +330,7 @@ yarn dev                     # Use schema defaults
 - [React Documentation](https://react.dev/)
 - [Phystack Documentation](https://build.phystack.com/)
 - [Styled Components](https://styled-components.com/)
-- [@phystack/cli](https://www.npmjs.com/package/@phystack/cli)
+- [phy CLI](https://www.npmjs.com/package/@phystack/cli) (install globally: `npm i -g @phystack/cli@dev`)
 
 ## License
 
