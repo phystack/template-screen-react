@@ -20,10 +20,10 @@ const settingsPath = path.join(settingsDir, "index.json");
  * - If it doesn't exist, generate it from src/schema.ts defaults.
  *
  * To download settings from an installation:
- *   yarn download-settings <installation-name>
+ *   bun run download-settings <installation-name>
  *
  * To reset to schema defaults:
- *   Delete src/settings/index.json and re-run yarn dev
+ *   Delete src/settings/index.json and re-run bun run dev
  */
 async function initSettings() {
   // Ensure settings directory exists
@@ -55,7 +55,7 @@ async function generateFromSchema() {
 
     // Generate schema with ts-schema
     await execAsync(
-      `npx ts-schema ${schemaPath} ${path.join(rootDir, "build")}`,
+      `bunx ts-schema ${schemaPath} ${path.join(rootDir, "build")}`,
       {
         cwd: rootDir,
       }

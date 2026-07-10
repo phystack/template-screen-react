@@ -18,7 +18,7 @@ async function buildAnalyticsSchema() {
     const outputPath = path.join(buildDir, "analytics-schema.json");
 
     // Compile and extract the default export using tsc + Node eval
-    const command = `npx tsc ${analyticsSchemaPath} --moduleResolution node --skipLibCheck --outFile /dev/stdout -m amd | node -e 'a={};eval("define=(_,d,c)=>{c(a,a,...d.slice(2).map(require));console.log(JSON.stringify(a.default))};" + require("fs").readFileSync("/dev/stdin","utf8"))' > ${outputPath}`;
+    const command = `bunx tsc ${analyticsSchemaPath} --moduleResolution node --skipLibCheck --outFile /dev/stdout -m amd | node -e 'a={};eval("define=(_,d,c)=>{c(a,a,...d.slice(2).map(require));console.log(JSON.stringify(a.default))};" + require("fs").readFileSync("/dev/stdin","utf8"))' > ${outputPath}`;
 
     const { stdout, stderr } = await execAsync(command, { cwd: rootDir });
 

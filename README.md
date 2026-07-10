@@ -45,7 +45,7 @@ phy simulator start
 ```
 
 ```bash
-yarn dev
+bun run dev
 ```
 
 This creates a local simulated twin based on your settings from `src/settings/index.json` (generated from `schema.ts` defaults if the file doesn't exist) and starts the Vite dev server. Your browser will open automatically at http://localhost:3000 with the app connected to the simulator.
@@ -55,7 +55,7 @@ This creates a local simulated twin based on your settings from `src/settings/in
 Build the `.gridapp` package:
 
 ```bash
-yarn build
+bun run build
 ```
 
 Publish to your tenant:
@@ -89,13 +89,13 @@ vite.config.ts          # Vite config with simulator support and Node.js polyfil
 
 | Script | Description |
 |--------|-------------|
-| `yarn dev` | Run the app locally with the simulator (`phy simulator run .`). Automatically generates settings from schema if missing (via `predev` hook). |
-| `yarn start` | Generate schema and start the Vite dev server directly |
-| `yarn build` | Production build (TypeScript, Vite, schema, post-processing, `.gridapp` packaging) |
+| `bun run dev` | Run the app locally with the simulator (`phy simulator run .`). Automatically generates settings from schema if missing (via `predev` hook). |
+| `bun run start` | Generate schema and start the Vite dev server directly |
+| `bun run build` | Production build (TypeScript, Vite, schema, post-processing, `.gridapp` packaging) |
 | `yarn pub` | Publish the `.gridapp` to your tenant |
-| `yarn schema` | Generate settings and analytics schemas |
-| `yarn lint` | Run ESLint |
-| `yarn format` | Format code with Prettier |
+| `bun run schema` | Generate settings and analytics schemas |
+| `bun run lint` | Run ESLint |
+| `bun run format` | Format code with Prettier |
 | `yarn upload-description` | Upload the app description to your tenant |
 
 ## Related Documentation

@@ -16,7 +16,7 @@ async function buildSchema() {
 
     // Run ts-schema CLI to generate schema.json from src/schema.ts
     const { stdout, stderr } = await execAsync(
-      `npx ts-schema ${path.join(rootDir, "src/schema.ts")} ${buildDir}`,
+      `bunx ts-schema ${path.join(rootDir, "src/schema.ts")} ${buildDir}`,
       { cwd: rootDir }
     );
 
