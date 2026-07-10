@@ -1,6 +1,7 @@
 {
   "name": "phystack-template-screen-react",
   "version": "0.4.0",
+  "description": "PhyStack Screen App Template (React)",
   "private": true,
   "application-type": "screen",
   "homepage": "./",

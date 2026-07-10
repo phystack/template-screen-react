@@ -1,106 +1,76 @@
 # template-screen-react
 
-Vite + React + TypeScript template for scaffolding new PhyStack screen apps via `@phystack/cli`.
+Starter template for PhyStack **SCREEN** apps — Vite + React front-end
+bundles running full-screen on PhyOS screens, connected to the platform
+through `@phystack/hub-client`. Scaffolded by the PhyStack CLI
+(`phy app init --type screen`) or usable directly.
 
-## Overview
-
-This repository is a project template used by `@phystack/cli` to scaffold new screen apps. Screen apps are web-based applications that run across PhyOS devices, Tizen displays, and modern browsers, providing user-facing graphical interfaces for interacting with PhyStack services and connected devices.
-
-This template does not deploy anywhere on its own.
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Runtime | Node.js 24 |
-| Framework | React 18, Vite 7 |
-| Language | TypeScript 5.9 |
-| Styling | Styled Components 5 |
-| Platform client | @phystack/hub-client |
-| Analytics | @ombori/grid-reports |
-| Build target | ES2015 (Tizen 4 compatible) |
-
-## Prerequisites
-
-- Node.js 24+ (see `.nvmrc`)
-- Yarn 1.x (enforced via preinstall hook)
-- `@phystack/cli` installed globally (`npm i -g @phystack/cli`)
-
-## Getting Started
-
-This template is used automatically when you create a new screen app with the CLI:
+## Getting started
 
 ```bash
-phy app create
-```
+# Scaffold via the PhyStack CLI
+phy app init my-screen-app --type screen
 
-Select **Screen Application (React)** when prompted. The CLI will scaffold a new project from this template and install dependencies.
-
-### Run Locally with the Simulator
-
-Start the simulator server, then launch your app against it:
-
-```bash
-phy simulator start
-```
-
-```bash
-bun run dev
-```
-
-This creates a local simulated twin based on your settings from `src/settings/index.json` (generated from `schema.ts` defaults if the file doesn't exist) and starts the Vite dev server. Your browser will open automatically at http://localhost:3000 with the app connected to the simulator.
-
-### Build and Publish
-
-Build the `.gridapp` package:
-
-```bash
+# Or work directly from this template
+bun install
 bun run build
 ```
 
-Publish to your tenant:
+## Local development (simulator)
 
 ```bash
-yarn pub
+npm i -g @phystack/device-simulator   # once — provides the phy-simulator binary
+bun run dev                           # simulated device on :55000 + vite dev server
 ```
 
-For the full walkthrough, see the [Build A Screen App](https://build.phystack.com/tutorials/build-your-first-screen-app/) tutorial.
+`bun run dev` runs `phy-simulator run .`, which starts the local simulated
+device, launches the vite dev server, and opens the app in your browser with
+the instance id in the URL hash (`/#instanceId=…`) — that's how hub-client
+knows which twin the page is. Settings defaults are seeded from the schema
+by `scripts/init-settings.js`.
 
-## Project Structure
+## Flow
 
+```bash
+# 1. Edit src/schema.ts (installation settings), src/analytics-schema.ts (events), src/App.tsx (UI)
+# 2. Local build: typecheck + vite build + schemas into build/
+bun run build
+
+# 3. Register the app in your tenant (once)
+phy app create my-screen-app --type screen
+
+# 4. Submit + publish the build (no container image for screen apps)
+bun run pub
 ```
-src/
-  App.tsx               # Main React component
-  main.tsx              # Entry point (createRoot)
-  schema.ts             # Settings schema (source of truth)
-  analytics-schema.ts   # Analytics dashboard configuration
-  index.css             # Global styles
-scripts/
-  init-settings.js      # Pre-dev settings generation
-  build-schema.js       # Schema build step
-  build-analytics-schema.js  # Analytics schema build step
-  post-build.js         # Asset manifest + build processing
-meta/                   # App screenshots for marketplace
-DESCRIPTION.md          # Marketplace description
-vite.config.ts          # Vite config with simulator support and Node.js polyfills
-```
+
+`pub` runs `phy app build create $npm_package_name --dir . --publish` — the
+vite bundle and generated schemas are packaged and published as soon as the
+build processes.
 
 ## Scripts
 
 | Script | Description |
 |--------|-------------|
-| `bun run dev` | Run the app locally with the simulator (`phy simulator run .`). Automatically generates settings from schema if missing (via `predev` hook). |
-| `bun run start` | Generate schema and start the Vite dev server directly |
-| `bun run build` | Production build (TypeScript, Vite, schema, post-processing, `.gridapp` packaging) |
-| `yarn pub` | Publish the `.gridapp` to your tenant |
-| `bun run schema` | Generate settings and analytics schemas |
-| `bun run lint` | Run ESLint |
-| `bun run format` | Format code with Prettier |
-| `yarn upload-description` | Upload the app description to your tenant |
+| `bun run dev` | Simulator + vite dev server (`phy-simulator run .`) |
+| `bun run start` | Schemas + vite dev server only (expects a running simulator) |
+| `bun run build` | `tsc -b` + `vite build` + schemas + bundle post-processing |
+| `bun run schema` | Generate `build/schema.json`, `meta-schema.json`, `analytics-schema.json` |
+| `bun run pub` | Build, then submit + publish via the `phy` CLI |
+| `bun run lint` | eslint |
+| `bun run format` | prettier (`format:check` to verify only) |
 
-## Related Documentation
+## Layout
 
-- [Build A Screen App](https://build.phystack.com/tutorials/build-your-first-screen-app/) -- step-by-step tutorial
-- [Settings Schemas](https://build.phystack.com/phystack-concepts/settings-schemas/) -- how settings and schemas work
-- [Reports](https://build.phystack.com/phystack-concepts/reports/) -- analytics dashboard configuration
-- [Dev Environment Setup](https://build.phystack.com/getting-started/dev-environment-setup/) -- CLI installation and simulator setup
+| Path | Purpose |
+|------|---------|
+| `src/App.tsx` | UI + hub-client connection (settings, twin messaging, signals) |
+| `src/schema.ts` | Installation-settings schema (TypeScript → JSON Schema) |
+| `src/analytics-schema.ts` | Analytics events this app emits |
+| `scripts/` | Schema build, local settings seed, post-build bundle fixup |
+| `vite.config.ts` | Dev server (port 3000) + simulator hand-off via `#instanceId` |
+
+## Web sibling
+
+[template-mobile](https://github.com/phystack/template-mobile) is this
+template with `application-type: web` plus a PWA layer, and nothing else
+different. If you change one template, change both.

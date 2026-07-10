@@ -1,418 +1,72 @@
-# CLAUDE.md
+# CLAUDE.md — template-screen-react
 
-This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
+Starter template for PhyStack **SCREEN** apps: a Vite + React 18 +
+TypeScript front-end bundle that runs full-screen on PhyOS screens and
+connects to the platform through `@phystack/hub-client` (a Screen twin).
+Scaffolded by `phy app init <name> --type screen`.
 
-## Project Overview
+## Commands (bun-only — no npm/yarn scripts)
 
-This is a modern Vite-based React TypeScript template for building PhyStack Grid Apps. It replaces the old Create React App (CRA) template with a faster, more modern development experience while maintaining full compatibility with the PhyStack Grid deployment infrastructure.
+| Command | What it runs |
+|---|---|
+| `bun install` | Install dependencies |
+| `bun run dev` | `phy-simulator run . --dev-command 'bun run start'` — local simulated device + vite dev server, auto-opens the browser |
+| `bun run start` | Schemas + `vite` only (expects a running simulator) |
+| `bun run build` | `tsc -b` + `vite build` + schemas + `scripts/post-build.js` |
+| `bun run schema` | `scripts/build-schema.js` + `scripts/build-analytics-schema.js` → `build/` |
+| `bun run pub` | `bun run build && phy app build create $npm_package_name --dir . --publish` |
+| `bun run lint` / `format` / `format:check` | eslint / prettier |
 
-## Commands
+## Dev loop
 
-### Development
+- `bun run dev` needs the standalone simulator installed once:
+  `npm i -g @phystack/device-simulator` (provides the `phy-simulator`
+  binary). It boots a simulated device on `:55000`, starts vite, and opens
+  the browser at `/#instanceId=<twinId>` — hub-client reads the instance id
+  from the URL hash.
+- The hub connection is a per-window singleton; `connectPhyClient()` is
+  called once from `src/App.tsx` and signals/analytics reuse the same
+  socket. Do not open a second connection.
+- Settings come from the Screen twin's desired properties;
+  `scripts/init-settings.js` seeds local defaults from the schema.
 
-```bash
-yarn install    # Install dependencies (only yarn allowed, enforced via preinstall)
-yarn dev        # Start dev server on http://localhost:3000 with auto-settings init
-yarn preview    # Preview production build locally
-yarn lint       # Run ESLint
-```
+## Schema pipeline
 
-### Building
+`src/schema.ts` → `scripts/build-schema.js` → `build/schema.json`
+(validation) + `build/meta-schema.json` (Console UI hints).
+`src/analytics-schema.ts` → `build/analytics-schema.json`.
+`scripts/post-build.js` finalizes the bundle layout after `vite build`.
 
-```bash
-yarn build      # Full production build: schema → TypeScript → Vite → post-processing
-yarn schema     # Generate settings and analytics schemas only
-```
-
-### Settings Management
-
-```bash
-yarn download-settings <installation-name>  # Download settings from PhyStack installation
-# Settings are downloaded to src/settings/index.json (gitignored, persistent)
-# Delete this file to revert to schema-generated defaults
-```
-
-### Deployment
-
-```bash
-yarn pub                    # Publish to PhyStack Grid (via @phystack/cli)
-yarn upload-description     # Upload DESCRIPTION.md to marketplace
-yarn connect                # Connect to dev WebSocket
-```
-
-## Git Commit Guidelines
-
-**IMPORTANT:** DO NOT add "Co-Authored-By: Claude" or any similar attribution to commit messages in this repository. Keep commits clean and professional without AI attribution.
-
-## Settings System Architecture
-
-### Settings File
-
-The template uses a single **`src/settings/index.json`** file (gitignored):
-
-- Auto-generated from `src/schema.ts` defaults on first `yarn dev` if it doesn't exist
-- Can be manually edited to test different settings
-- Can be overwritten with real settings via `yarn download-settings <installation-name>`
-- To reset to schema defaults, delete the file and re-run `yarn dev`
-
-### Settings Loading Flow
-
-```
-yarn dev
-  ↓
-predev hook: node scripts/init-settings.js
-  ↓
-index.json exists?
-  ├─ YES → Keep it (no changes)
-  └─ NO  → Generate from schema.ts defaults
-  ↓
-Simulator loads settings and provides them via hub-client
-```
-
-## Build Process
-
-The build pipeline follows this sequence:
+## Publish flow (new `phy` CLI grammar)
 
 ```bash
-yarn build
-  ↓
-1. yarn schema
-   ├─ mkdirp build
-   ├─ node scripts/build-schema.js
-   │   └─ npx ts-schema src/schema.ts build/
-   │       → build/schema.json (with defaults)
-   │       → build/meta-schema.json
-   └─ node scripts/build-analytics-schema.js
-       └─ Compile src/analytics-schema.ts
-           → build/analytics-schema.json
-  ↓
-2. tsc -b
-   └─ TypeScript compilation check
-  ↓
-3. vite build
-   ├─ Output to: build/
-   ├─ Assets to: build/static/js/, build/static/css/, etc.
-   └─ Uses vite.config.ts (with Node.js polyfills)
-  ↓
-4. node scripts/post-build.js
-   ├─ Copy schema.json → _schema.json
-   ├─ Copy analytics-schema.json → _meta-schema.json
-   ├─ Generate asset-manifest.json (omg-deploys format)
-   └─ Copy package.json to build/
+phy login
+phy app create <name> --type screen   # register in your tenant (once)
+bun run pub                           # build, submit + publish (no container image)
 ```
 
-### Build Output Structure
-
-```
-build/
-├── static/
-│   ├── js/              # Hashed JS bundles
-│   ├── css/             # Hashed CSS files
-│   └── svg/             # SVG assets
-├── index.html           # Entry point
-├── asset-manifest.json  # Deployment manifest
-├── _schema.json         # Settings schema (omg-deploys format)
-├── _meta-schema.json    # Analytics schema (omg-deploys format)
-└── package.json         # Package metadata
-```
-
-## Browser Compatibility
-
-### Tizen 4 Support
-
-This template is configured to run on **Tizen 4 devices** (Samsung Smart Signage) which use an older Chromium version (~56, circa 2017).
-
-**Build Configuration:**
-
-- `vite.config.ts`: `target: 'es2015'` - Transpiles to ES2015/ES6
-- `tsconfig.app.json`: `target: "ES2015"` - TypeScript compilation target
-- Vite automatically polyfills necessary features (async/await, Promises, etc.)
-
-**Supported Features:**
-
-- ✅ Arrow functions
-- ✅ Classes
-- ✅ Template literals
-- ✅ let/const
-- ✅ Promises
-- ✅ async/await (polyfilled)
-- ✅ Map/Set (polyfilled)
-
-**NOT Supported (avoided in code):**
-
-- ❌ Optional chaining (`?.`) - Use manual checks
-- ❌ Nullish coalescing (`??`) - Use `||` instead
-- ❌ BigInt
-- ❌ Top-level await
-
-**Important:** When adding new dependencies, ensure they support ES2015 or provide ES5 bundles.
-
-## Vite Configuration
-
-### Node.js Polyfills
-
-The `vite.config.ts` includes polyfills for `@phystack/hub-client` (which is isomorphic):
-
-```typescript
-define: {
-  'process.env': {},
-  'process.version': JSON.stringify(''),
-  'process.platform': JSON.stringify('browser'),
-}
-
-resolve: {
-  alias: {
-    events: 'events',
-  },
-}
-```
-
-### CRA Compatibility
-
-Supports `PUBLIC_URL` environment variable for backward compatibility:
-
-```typescript
-const base = process.env.PUBLIC_URL || process.env.VITE_ROOT_PATH || "./";
-```
-
-### Output Paths
-
-Configured to match CRA/omg-deploys expectations:
-
-```typescript
-build: {
-  outDir: 'build',  // Not 'dist'
-  rollupOptions: {
-    output: {
-      entryFileNames: 'static/js/[name].[hash].js',
-      chunkFileNames: 'static/js/[name].[hash].js',
-      assetFileNames: 'static/[ext]/[name].[hash].[ext]',
-    },
-  },
-}
-```
-
-## React Best Practices
-
-This template follows **modern React 18 patterns**:
-
-### DO ✅
-
-- Use `createRoot()` API (not deprecated `ReactDOM.render()`)
-- Use cleanup functions in `useEffect` with cancellation flags
-- Include proper error state handling
-- Use `type` imports for TypeScript types
-- Keep effects simple with minimal dependencies
-- Avoid unnecessary `useCallback`/`useMemo` (only optimize when needed)
-
-### DON'T ❌
-
-- Don't use `import React from 'react'` (not needed in modern React)
-- Don't create complex dependency arrays that cause re-renders
-- Don't use `useCallback` without measuring performance impact first
-- Don't ignore cleanup in async effects (causes memory leaks)
-- Don't use deprecated APIs like `ReactDOM.render()`
-
-### Example: Proper useEffect Pattern
-
-```typescript
-useEffect(() => {
-  let cancelled = false; // Cleanup flag
-
-  const initialize = async () => {
-    try {
-      const data = await fetchData();
-      if (!cancelled) {
-        // Check before setState
-        setState(data);
-      }
-    } catch (err) {
-      if (!cancelled) {
-        setError(err);
-      }
-    }
-  };
-
-  initialize();
-
-  return () => {
-    cancelled = true; // Cleanup on unmount
-  };
-}, []); // Empty array - runs once
-```
-
-## Schema System
-
-### Settings Schema (`src/schema.ts`)
-
-Uses **JSDoc annotations** for schema generation:
-
-```typescript
-/**
- * @title App Settings
- */
-export type Settings = {
-  /**
-   * @title Product Name
-   * @default "My Product"
-   */
-  productName: string;
-};
-```
-
-The `@default` values are extracted to generate `src/settings/index.json` on first run.
-
-### Analytics Schema (`src/analytics-schema.ts`)
-
-Uses `@ombori/grid-reports` for dashboard configuration:
-
-```typescript
-import { AnalyticsSchema, CardType } from "@ombori/grid-reports";
-
-const analyticsSchema: AnalyticsSchema = {
-  groups: [
-    {
-      name: "Overview",
-      cards: [{ type: CardType.Sessions }],
-    },
-  ],
-};
-
-export default analyticsSchema;
-```
-
-## Deployment Compatibility
-
-### omg-deploys Azure Functions
-
-The template is compatible with `omg-deploys` which expects:
-
-- ✅ `build/` directory (not `dist/`)
-- ✅ `_schema.json` and `_meta-schema.json` in build root
-- ✅ `asset-manifest.json` with files and entrypoints
-- ✅ `package.json` in build directory
-
-### @phystack/cli
-
-Compatible with `phy` CLI commands:
-
-```bash
-phy app settings <installation>  # Download settings
-phy app publish                   # Publish app
-phy app upload-description        # Upload description
-phy dev ws                        # Connect to dev WebSocket
-```
-
-## Common Tasks
-
-### Adding a New Setting
-
-1. Edit `src/schema.ts`:
-
-```typescript
-export type Settings = {
-  // ... existing settings
-
-  /**
-   * @title New Setting
-   * @default "default value"
-   */
-  newSetting: string;
-};
-```
-
-2. Settings automatically regenerate on next `yarn dev`
-
-3. Use in component:
-
-```typescript
-const { newSetting } = state.settings;
-```
-
-### Switching Between Real and Mock Data
-
-```bash
-# Use real installation data
-yarn download-settings my-installation-123
-yarn dev  # Uses downloaded settings
-
-# Switch back to schema defaults
-rm src/settings/index.json
-yarn dev  # Regenerates from schema defaults
-```
-
-### Testing Build Locally
-
-```bash
-yarn build      # Build production
-yarn preview    # Preview at http://localhost:4173
-```
-
-## File Organization
-
-### Do Not Commit
-
-- `src/settings/index.json` - Local settings (generated, downloaded, or edited)
-- `build/` - Build output
-- `node_modules/` - Dependencies
-
-### Do Commit
-
-- `src/schema.ts` - Settings schema (source of truth)
-- `src/analytics-schema.ts` - Analytics configuration
-- All scripts in `scripts/`
-- `vite.config.ts` - Build configuration
-- `DESCRIPTION.md` - App marketplace description
-- `meta/` - App screenshots
-
-## Troubleshooting
-
-### Settings not loading
-
-```bash
-# Check what exists
-ls -la src/settings/
-
-# Regenerate from scratch
-rm -rf src/settings/
-yarn dev
-```
-
-### Build fails
-
-```bash
-# Clean rebuild
-rm -rf build node_modules
-yarn install
-yarn build
-```
-
-### TypeScript errors
-
-The project uses TypeScript strict mode. Common issues:
-
-- Missing null checks: Use `?.` optional chaining
-- Type assertions: Use `as Settings` when needed
-- Import types: Use `import type { ... }`
-
-### Vite HMR not working
-
-- Check port 3000 is not in use
-- Restart dev server: Ctrl+C then `yarn dev`
-- Clear Vite cache: `rm -rf node_modules/.vite`
-
-## Environment
-
-- **Node.js**: 18+ required
-- **Package Manager**: Yarn only (enforced via preinstall hook)
-- **TypeScript**: ~5.9.3
-- **React**: 18.2.0
-- **Vite**: ^7.1.7
-
-## External Documentation
-
-- [Vite](https://vitejs.dev/)
-- [React](https://react.dev/)
-- [PhyStack](https://build.phystack.com/)
-- [Styled Components](https://styled-components.com/)
-- [@phystack/cli](https://www.npmjs.com/package/@phystack/cli)
+Screen builds ship no container, so there is no `--push` and no registry
+login. The legacy `@phystack/cli` (Node) does not work with this template —
+use the Rust `phy` CLI only.
+
+## Layout
+
+| Path | Purpose |
+|---|---|
+| `src/App.tsx` | UI + hub-client connection, settings, twin messaging, signals |
+| `src/schema.ts` | Installation-settings schema source |
+| `src/analytics-schema.ts` | Analytics events this app emits |
+| `scripts/` | Schema build, local settings seed, post-build fixup |
+| `vite.config.ts` | Dev server (port 3000) + simulator hand-off via `#instanceId` |
+
+## Gotchas
+
+- The vite dev server defaults to port 3000, shared by every screen app
+  scaffolded from this template — only one can serve at a time, and stale
+  browser tabs from sibling apps stay connected to the simulator (they show
+  up as extra "unknown" instances in its log).
+- `application-type` in package.json must stay `screen`; the package.json
+  `name` is the app name used by `pub` (`$npm_package_name`).
+- **Lockstep rule:** `template-mobile` (WEB apps) is a copy of this template
+  with only `application-type: web`, a PWA layer, and naming changed. If you
+  change something here, apply it there too.
