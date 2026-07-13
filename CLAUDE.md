@@ -10,7 +10,7 @@ Scaffolded by `phy app init <name> --type screen`.
 | Command | What it runs |
 |---|---|
 | `bun install` | Install dependencies |
-| `bun run dev` | `phy-simulator run . --dev-command 'bun run start'` — local simulated device + vite dev server, auto-opens the browser |
+| `bun run dev` | `phy-simulator run . --dev-command 'bun run start'` — twin on the running simulator + vite dev server, auto-opens the browser |
 | `bun run start` | Schemas + `vite` only (expects a running simulator) |
 | `bun run build` | `tsc -b` + `vite build` + schemas + `scripts/post-build.js` |
 | `bun run schema` | `scripts/build-schema.js` + `scripts/build-analytics-schema.js` → `build/` |
@@ -19,11 +19,12 @@ Scaffolded by `phy app init <name> --type screen`.
 
 ## Dev loop
 
-- `bun run dev` needs the standalone simulator installed once:
-  `npm i -g @phystack/device-simulator` (provides the `phy-simulator`
-  binary). It boots a simulated device on `:55000`, starts vite, and opens
-  the browser at `/#instanceId=<twinId>` — hub-client reads the instance id
-  from the URL hash.
+- Install the standalone simulator once (`npm i -g @phystack/device-simulator`,
+  provides the `phy-simulator` binary) and start it in a separate terminal:
+  `phy-simulator start` (simulated device on `:55000`). Then `bun run dev`
+  creates a twin on it, starts vite, and opens the browser at
+  `/#instanceId=<twinId>` — hub-client reads the instance id from the URL
+  hash. `run` requires the server to already be running.
 - The hub connection is a per-window singleton; `connectPhyClient()` is
   called once from `src/App.tsx` and signals/analytics reuse the same
   socket. Do not open a second connection.

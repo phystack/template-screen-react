@@ -20,13 +20,14 @@ bun run build
 
 ```bash
 npm i -g @phystack/device-simulator   # once — provides the phy-simulator binary
-bun run dev                           # simulated device on :55000 + vite dev server
+phy-simulator start                   # terminal 1: simulated device on :55000
+bun run dev                           # terminal 2: vite dev server against it
 ```
 
-`bun run dev` runs `phy-simulator run .`, which starts the local simulated
-device, launches the vite dev server, and opens the app in your browser with
-the instance id in the URL hash (`/#instanceId=…`) — that's how hub-client
-knows which twin the page is. Settings defaults are seeded from the schema
+`bun run dev` runs `phy-simulator run .`, which creates a local twin on the
+running simulator, launches the vite dev server, and opens the app in your
+browser with the instance id in the URL hash (`/#instanceId=…`) — that's how
+hub-client knows which twin the page is. Settings defaults are seeded from the schema
 by `scripts/init-settings.js`.
 
 ## Flow
