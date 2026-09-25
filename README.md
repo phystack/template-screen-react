@@ -72,6 +72,6 @@ build processes.
 
 ## Web sibling
 
-[template-mobile](https://github.com/phystack/template-mobile) is this
+[template-web-react](https://github.com/phystack/template-web-react) is this
 template with `application-type: web` plus a PWA layer, and nothing else
 different. If you change one template, change both.
