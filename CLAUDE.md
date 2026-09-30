@@ -68,6 +68,6 @@ use the Rust `phy` CLI only.
   up as extra "unknown" instances in its log).
 - `application-type` in package.json must stay `screen`; the package.json
   `name` is the app name used by `pub` (`$npm_package_name`).
-- **Lockstep rule:** `template-mobile` (WEB apps) is a copy of this template
+- **Lockstep rule:** `template-web-react` (WEB apps) is a copy of this template
   with only `application-type: web`, a PWA layer, and naming changed. If you
   change something here, apply it there too.

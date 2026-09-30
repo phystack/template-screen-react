@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 // Use relative paths (./) by default for maximum flexibility in deployment
 const base = process.env.PUBLIC_URL || process.env.VITE_ROOT_PATH || "./";
 
-// When launched via `phy simulator run`, PHYSTACK_SIMULATOR_URL is set
+// When launched via `phy-simulator run`, PHYSTACK_SIMULATOR_URL is set
 const simulatorUrl = process.env.PHYSTACK_SIMULATOR_URL;
 const twinId = process.env.TWIN_ID;
 
